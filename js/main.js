@@ -92,20 +92,15 @@ const getRandomArrayElement = (elements) => {
 };
 
 const createComments = () => {
-  const comments = [];
-
-  for (
-    let i = 0;
-    i < getRandomNumber(COMMENTS_COUNT.MIN, COMMENTS_COUNT.MAX);
-    i++
-  ) {
-    comments.push({
+  const commentsCount = getRandomNumber(COMMENTS_COUNT.MIN, COMMENTS_COUNT.MAX);
+  const comments = new Array(commentsCount).fill(null).map(() => {
+    return {
       id: getRandomNumber(IDS_COUNT.MIN, IDS_COUNT.MAX),
       avatar: getRandomArrayElement(AVATARS),
       name: getRandomArrayElement(AUTHORS),
       message: getRandomArrayElement(COMMENTS),
-    });
-  }
+    };
+  });
 
   return comments;
 };
@@ -114,7 +109,7 @@ const createPhotos = () => {
   for (let i = 0; i < PHOTOS_COUNT; i++) {
     photos.push({
       id: getRandomNumber(IDS_COUNT.MIN, IDS_COUNT.MAX),
-      url: `photos/${i}.jpg`,
+      url: `photos/${i + 1}.jpg`,
       likes: getRandomNumber(LIKES_COUNT.MIN, LIKES_COUNT.MAX),
       description: getRandomArrayElement(PHOTO_DESCRIPTION),
       comments: createComments(),
