@@ -6,18 +6,18 @@ const COMMENTS_COUNT = {
   MAX: 6,
 };
 
-const createComments = () => {
-  const commentsCount = getRandomNumber(COMMENTS_COUNT.MIN, COMMENTS_COUNT.MAX);
-  const comments = new Array(commentsCount).fill(null).map(() => {
-    return {
-      id: getRandomNumber(IDS_COUNT.MIN, IDS_COUNT.MAX),
-      avatar: getRandomArrayElement(AVATARS),
-      name: getRandomArrayElement(AUTHORS),
-      message: getRandomArrayElement(COMMENTS),
-    };
-  });
-
-  return comments;
+const createComment = () => {
+  return {
+    id: getRandomNumber(IDS_COUNT.MIN, IDS_COUNT.MAX),
+    avatar: getRandomArrayElement(AVATARS),
+    name: getRandomArrayElement(AUTHORS),
+    message: getRandomArrayElement(COMMENTS),
+  };
 };
+
+const createComments = () =>
+  new Array(getRandomNumber(COMMENTS_COUNT.MIN, COMMENTS_COUNT.MAX))
+    .fill(null)
+    .map(() => createComment());
 
 export { createComments };
