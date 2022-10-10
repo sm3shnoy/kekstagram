@@ -18,4 +18,18 @@ const checkLength = (str, length) => {
   return str.length <= length;
 };
 
-export { getRandomNumber, getRandomArrayElement, checkLength };
+const isEscEvent = (evt) => {
+  return evt.code === 'Esc' || evt.code === 'Escape';
+};
+
+const isEnterEvent = (evt) => {
+  return evt.code === 'Enter';
+};
+
+export {
+  getRandomNumber,
+  getRandomArrayElement,
+  checkLength,
+  isEscEvent,
+  isEnterEvent,
+};

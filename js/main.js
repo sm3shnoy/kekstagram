@@ -1,2 +1,2 @@
-import { createPictures } from './create-pictures.js';
-createPictures();
+import { createPreview } from './create-preview.js';
+createPreview();

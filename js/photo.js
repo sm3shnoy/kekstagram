@@ -6,7 +6,9 @@ import {
   LIKES_COUNT,
   PHOTO_DESCRIPTION,
 } from './data.js';
+
 const photos = [];
+
 const createPhotos = () => {
   for (let i = 0; i < PHOTOS_COUNT; i++) {
     photos.push({
