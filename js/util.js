@@ -1,3 +1,9 @@
+const Keys = {
+  ESC: 'Esc',
+  ESCAPE: 'Escape',
+  ENTER: 'Enter',
+};
+
 const getRandomNumber = (min, max) => {
   if (min < 0 || max <= 0) {
     return -1;
@@ -19,11 +25,11 @@ const checkLength = (str, length) => {
 };
 
 const isEscEvent = (evt) => {
-  return evt.code === 'Esc' || evt.code === 'Escape';
+  return evt.code === Keys.ESC || evt.code === Keys.ESCAPE;
 };
 
 const isEnterEvent = (evt) => {
-  return evt.code === 'Enter';
+  return evt.code === Keys.ENTER;
 };
 
 export {
