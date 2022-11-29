@@ -21,11 +21,11 @@ const resetSettings = () => {
   zoomValue.value = DEFAULT_ZOOM_VALUE + '%';
   preview.style.transform = 'scale(1)';
   preview.className = '';
-  uploadFileField.value = '';
   clearFilter();
 };
 
 export const uploadModalOpen = () => {
+  console.log(uploadFileField.value);
   if (uploadFileField.value.length > 0) {
     resetSettings();
     uploadModalOverlay.classList.remove('hidden');
