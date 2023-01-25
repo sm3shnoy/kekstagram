@@ -1,9 +1,11 @@
+import { sendData } from './api.js';
+import { uploadModalClose } from './edit-photo-modal.js';
+import { addFormStatusModal } from './status-modal.js';
 import { isEscEvent } from './util.js';
 
 const MAX_HASHTAG_LENGTH = 20;
-const MIN_HASHTAG_LENGTH = 2;
 const MAX_HASHTAG_COUNT = 5;
-
+const uploadPhotoForm = document.querySelector('.img-upload__form');
 const hashTagField = document.querySelector('.text__hashtags');
 const description = document.querySelector('.text__description');
 
@@ -47,8 +49,6 @@ hashTagField.addEventListener('input', () => {
         'Хэштег должен состоять только из букв и цифр!'
       );
     } else if (array.indexOf(item) !== i) {
-      console.log(item, i);
-      console.log(array.indexOf(item) === i);
       hashTagField.setCustomValidity('Хэштеги не должны повторяться!');
     } else if (item.length > MAX_HASHTAG_LENGTH) {
       hashTagField.setCustomValidity(
@@ -67,3 +67,22 @@ description.addEventListener('keydown', (evt) => {
     evt.stopPropagation();
   }
 });
+
+const addNewPhoto = (onSuccess) => {
+  uploadPhotoForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    sendData(
+      () => {
+        onSuccess();
+        addFormStatusModal('success');
+      },
+      () => {
+        addFormStatusModal('error');
+        uploadModalClose();
+      },
+      new FormData(evt.target)
+    );
+  });
+};
+
+export { addNewPhoto, uploadPhotoForm };

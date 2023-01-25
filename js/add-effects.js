@@ -24,6 +24,9 @@ export const updateSliderOptions = (
 
   slider.noUiSlider.on('update', (values, handle) => {
     effectValue.value = values[handle];
+    effectValue.min = min;
+    effectValue.max = max;
+    effectValue.step = step;
     preview.style.filter = `${filterName}(${effectValue.value}${unit})`;
   });
 };
@@ -85,6 +88,7 @@ export const clearFilter = () => {
   effectValue.value = '';
   effectLevel.style.display = 'none';
   preview.style.filter = 'none';
+  effectsRadio[0].checked = true;
 };
 
 effectsRadio.forEach((item) => {
