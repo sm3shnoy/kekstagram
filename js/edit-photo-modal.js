@@ -1,5 +1,6 @@
 import { clearFilter } from './add-effects.js';
 import { isEscEvent, isEnterEvent } from './util.js';
+import { uploadPhotoForm } from './new-photo-form.js';
 
 const DEFAULT_ZOOM_VALUE = 100;
 
@@ -25,22 +26,20 @@ const resetSettings = () => {
 };
 
 export const uploadModalOpen = () => {
-  console.log(uploadFileField.value);
-  if (uploadFileField.value.length > 0) {
-    resetSettings();
-    uploadModalOverlay.classList.remove('hidden');
-    body.classList.add('modal-open');
-    document.addEventListener('keydown', onUploadModalEscKeydown);
-  }
+  resetSettings();
+  uploadModalOverlay.classList.remove('hidden');
+  body.classList.add('modal-open');
+  document.addEventListener('keydown', onUploadModalEscKeydown);
+  uploadModalCloseButton.addEventListener('click', uploadModalClose);
 };
 
 export const uploadModalClose = () => {
+  resetSettings();
+  uploadPhotoForm.reset();
+  uploadFileField.value = '';
   uploadModalOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
-  document.removeEventListener('keydown', onUploadModalEscKeydown);
 };
-
-uploadModalCloseButton.addEventListener('click', uploadModalClose);
 
 uploadModalCloseButton.addEventListener('keydown', (evt) => {
   if (isEnterEvent(evt)) {
@@ -48,4 +47,4 @@ uploadModalCloseButton.addEventListener('keydown', (evt) => {
   }
 });
 
-export { preview };
+export { preview, resetSettings, body };

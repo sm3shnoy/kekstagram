@@ -28,9 +28,8 @@ const createPhotos = () => {
   return photos;
 };
 
-export const createPreview = () => {
+const createPreview = (photos) => {
   const similarPicturesFragment = document.createDocumentFragment();
-  const photos = createPhotos();
 
   photos.map((item) => {
     const miniature = miniatureSimilarItem.cloneNode(true);
@@ -49,3 +48,5 @@ export const createPreview = () => {
 
   pictures.append(similarPicturesFragment);
 };
+
+export { createPreview };
