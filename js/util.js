@@ -20,8 +20,35 @@ const getRandomArrayElement = (elements) => {
   return elements[getRandomNumber(0, elements.length - 1)];
 };
 
-const checkLength = (str, length) => {
-  return str.length <= length;
+const shaffle = (elements) => {
+  let result = [];
+
+  for (let i = 0; i < elements.length; i++) {
+    let random = getRandomArrayElement(elements);
+
+    if (result.includes(random)) {
+      getRandomArrayElement(elements);
+    } else {
+      result.push(random);
+    }
+  }
+
+  return result;
+};
+
+const clearPicturesList = () => {
+  const picturesList = document.querySelector('.pictures');
+  const pictures = picturesList.children;
+
+  for (let i = pictures.length - 1; i >= 0; i--) {
+    if (pictures[i].classList.contains('picture')) {
+      pictures[i].remove();
+    }
+  }
+};
+
+const compareCommentLength = (photoA, photoB) => {
+  return photoB.comments.length - photoA.comments.length;
 };
 
 const isEscEvent = (evt) => {
@@ -35,7 +62,9 @@ const isEnterEvent = (evt) => {
 export {
   getRandomNumber,
   getRandomArrayElement,
-  checkLength,
   isEscEvent,
   isEnterEvent,
+  shaffle,
+  compareCommentLength,
+  clearPicturesList,
 };

@@ -1,3 +1,5 @@
+import { showFilters } from './filters.js';
+
 const checkStatus = (response) => {
   if (response.ok) {
     return response;
@@ -12,6 +14,7 @@ const getPreviews = (onSuccess) => {
     .then(checkStatus)
     .then((response) => response.json())
     .then((photos) => onSuccess(photos))
+    .then(showFilters)
     .catch((error) => console.log(error));
 };
 
