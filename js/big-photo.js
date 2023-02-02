@@ -1,12 +1,33 @@
 import { isEnterEvent, isEscEvent } from './util.js';
+import { debounce } from './debounce.js';
+
+const COMMENTS_LOAD_STEP = 5;
 
 const body = document.querySelector('body');
 const bigPhoto = document.querySelector('.big-picture');
 const closeBigPhotoButton = bigPhoto.querySelector('.big-picture__cancel');
+const commentsList = document.querySelector('.social__comments');
+const commentsItem = commentsList.querySelector('.social__comment');
+const commentCountElement = bigPhoto.querySelector('.social__comment-count');
+const commentLoader = bigPhoto.querySelector('.comments-loader');
+const moreCommentsButton = document.querySelector('.comments-loader');
 
-// временно
-bigPhoto.querySelector('.social__comment-count').hidden = true;
-bigPhoto.querySelector('.comments-loader').hidden = true;
+const state = {
+  comments: [],
+  commentsLoaded: [],
+  commentsCount: COMMENTS_LOAD_STEP,
+};
+
+const toggleLoader = () => {
+  if (
+    state.comments.length < COMMENTS_LOAD_STEP ||
+    state.commentsLoaded.length >= state.comments.length
+  ) {
+    commentLoader.hidden = true;
+  } else {
+    commentLoader.hidden = false;
+  }
+};
 
 const onBigPhotoEscKeydown = (evt) => {
   if (isEscEvent(evt)) {
@@ -28,40 +49,68 @@ const closeBigPhoto = () => {
   document.removeEventListener('keydown', onBigPhotoEscKeydown);
 };
 
-const renderComments = (comments) => {
-  const commentsWrapper = document.querySelector('.social__comments');
-  const commentContent = commentsWrapper.querySelector('.social__comment');
+const renderComment = (comment) => {
+  const commentSimilar = commentsItem.cloneNode(true);
+
+  commentSimilar.querySelector('.social__picture').src = comment.avatar;
+  commentSimilar.querySelector('.social__picture').alt = comment.name;
+  commentSimilar.querySelector('.social__text').textContent = comment.message;
+
+  return commentSimilar;
+};
+
+function renderComments() {
   const commentFragment = document.createDocumentFragment();
 
-  commentsWrapper.innerHTML = '';
+  commentsList.innerHTML = '';
 
-  comments.map((item) => {
-    const comment = commentContent.cloneNode(true);
-    comment.querySelector('.social__picture').src = item.avatar;
-    comment.querySelector('.social__picture').alt = item.name;
-    comment.querySelector('.social__text').textContent = item.message;
-    commentFragment.append(comment);
+  state.commentsCount =
+    state.comments.length < COMMENTS_LOAD_STEP
+      ? state.comments.length
+      : state.commentsCount;
+
+  commentCountElement.textContent = `${Math.min(
+    state.commentsCount,
+    state.comments.length
+  )} из ${state.comments.length} комментариев`;
+
+  state.commentsLoaded = state.comments.slice(0, state.commentsCount);
+
+  state.commentsLoaded.forEach((item) => {
+    commentFragment.append(renderComment(item));
   });
 
-  commentsWrapper.append(commentFragment);
-};
+  state.commentsCount += COMMENTS_LOAD_STEP;
+
+  commentsList.append(commentFragment);
+}
 
 export const onSmallPhotoClick = (photo) => {
   const { url, description, likes, comments } = photo;
   const img = bigPhoto.querySelector('.big-picture__img img');
 
-  body.classList.add('modal-open');
+  // sync state
+  state.commentsCount = COMMENTS_LOAD_STEP;
+  state.commentsLoaded = [];
+  state.comments = comments;
 
   img.src = url;
   img.alt = description;
   bigPhoto.querySelector('.likes-count').textContent = likes;
-  bigPhoto.querySelector('.comments-count').textContent = comments.length;
   bigPhoto.querySelector('.social__caption').textContent = description;
-
-  renderComments(comments);
 
   closeBigPhotoButton.addEventListener('click', closeBigPhoto);
   document.addEventListener('keydown', onBigPhotoEscKeydown);
-
+  body.classList.add('modal-open');
+  renderComments();
+  toggleLoader();
   bigPhoto.classList.remove('hidden');
 };
+
+moreCommentsButton.addEventListener(
+  'click',
+  debounce(() => {
+    renderComments();
+    toggleLoader();
+  }, 500)
+);

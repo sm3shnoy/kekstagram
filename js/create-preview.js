@@ -7,7 +7,7 @@ const miniatureSimilarItem = miniatureTemplate.querySelector('.picture');
 const createPreview = (photos) => {
   const similarPicturesFragment = document.createDocumentFragment();
 
-  photos.map((item) => {
+  photos.forEach((item) => {
     const miniature = miniatureSimilarItem.cloneNode(true);
 
     miniature.querySelector('.picture__img').src = item.url;
