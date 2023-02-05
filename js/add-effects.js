@@ -5,14 +5,7 @@ const effectsRadio = document.querySelectorAll('.effects__radio');
 const effectLevel = document.querySelector('.effect-level');
 const effectValue = document.querySelector('.effect-level__value');
 
-export const updateSliderOptions = (
-  min,
-  max,
-  start,
-  step,
-  filterName,
-  unit
-) => {
+const updateSliderOptions = (min, max, start, step, filterName, unit) => {
   slider.noUiSlider.updateOptions({
     range: {
       min: min,
@@ -31,7 +24,7 @@ export const updateSliderOptions = (
   });
 };
 
-export const addEffect = (evt) => {
+const addEffect = (evt) => {
   if (!slider.noUiSlider) {
     noUiSlider.create(slider, {
       start: 1,
@@ -84,7 +77,7 @@ export const addEffect = (evt) => {
   }
 };
 
-export const clearFilter = () => {
+const clearFilter = () => {
   effectValue.value = '';
   effectLevel.style.display = 'none';
   preview.style.filter = 'none';
@@ -94,3 +87,5 @@ export const clearFilter = () => {
 effectsRadio.forEach((item) => {
   item.addEventListener('change', addEffect);
 });
+
+export { clearFilter };

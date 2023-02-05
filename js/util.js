@@ -1,3 +1,5 @@
+import { pictures as picturesList } from './create-preview.js';
+
 const Keys = {
   ESC: 'Esc',
   ESCAPE: 'Escape',
@@ -37,7 +39,6 @@ const shaffle = (elements) => {
 };
 
 const clearPicturesList = () => {
-  const picturesList = document.querySelector('.pictures');
   const pictures = picturesList.children;
 
   for (let i = pictures.length - 1; i >= 0; i--) {
