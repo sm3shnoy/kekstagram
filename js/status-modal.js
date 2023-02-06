@@ -6,7 +6,7 @@ const addFormStatusModal = (type) => {
     .querySelector(`#${type}`)
     .content.querySelector(`.${type}`)
     .cloneNode(true);
-  const modalContainer = modal.querySelector('.success__inner');
+  const modalContainer = modal.querySelector(`.${type}__inner`);
 
   const escFormStatusModalClose = (evt) => {
     if (isEscEvent(evt)) {

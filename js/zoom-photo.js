@@ -7,7 +7,7 @@ const Zoom = {
 const minusButton = document.querySelector('.scale__control--smaller');
 const plusButton = document.querySelector('.scale__control--bigger');
 const zoomValue = document.querySelector('.scale__control--value');
-const img = document.querySelector('.img-upload__preview img');
+const preview = document.querySelector('.img-upload__preview img');
 
 const zoom = (evt) => {
   let currentZoom = parseInt(zoomValue.value, 10);
@@ -21,10 +21,10 @@ const zoom = (evt) => {
   }
 
   zoomValue.value = currentZoom + '%';
-  img.style.transform = `scale(${currentZoom / 100})`;
+  preview.style.transform = `scale(${currentZoom / 100})`;
 };
 
 minusButton.addEventListener('click', zoom);
 plusButton.addEventListener('click', zoom);
 
-export { img };
+export { preview, zoomValue, Zoom };

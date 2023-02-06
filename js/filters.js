@@ -1,44 +1,44 @@
+import { shaffle, compareCommentLength, clearPicturesList } from './util.js';
+import { createPreview } from './create-preview.js';
+import { debounce } from './debounce.js';
+
 const filters = document.querySelector('.img-filters');
 const filtersButtons = filters.querySelectorAll('.img-filters__button');
-const defaultButton = filters.querySelector('#filter-default');
-const randomButton = filters.querySelector('#filter-random');
-const discussedButton = filters.querySelector('#filter-discussed');
+
+const filtersF = {
+  'filter-default': (photos) => createPreview(photos),
+  'filter-random': (photos) => createPreview(shaffle(photos).slice(0, 10)),
+  'filter-discussed': (photos) =>
+    createPreview(photos.slice().sort(compareCommentLength)),
+};
+
+const changeFilters = debounce((evt, photos) => {
+  if (evt.target.id) {
+    clearPicturesList();
+
+    filtersF[evt.target.id](photos);
+  }
+}, 500);
+
+const onFilterButtonClick = (photos) => {
+  filters.addEventListener('click', (evt) => {
+    toggleButtons(evt);
+    changeFilters(evt, photos);
+  });
+};
 
 const showFilters = () => {
   filters.classList.remove('img-filters--inactive');
 };
 
 const toggleButtons = (evt) => {
-  filtersButtons.forEach((button) => {
-    button.classList.remove('img-filters__button--active');
-  });
-  evt.target.classList.add('img-filters__button--active');
+  if (evt.target.classList.contains('img-filters__button')) {
+    filtersButtons.forEach((button) => {
+      button.classList.remove('img-filters__button--active');
+    });
+
+    evt.target.classList.add('img-filters__button--active');
+  }
 };
 
-const showDefaultPicturesClick = (cb) => {
-  defaultButton.addEventListener('click', (evt) => {
-    toggleButtons(evt);
-    cb();
-  });
-};
-
-const showRandomPicturesClick = (cb) => {
-  randomButton.addEventListener('click', (evt) => {
-    toggleButtons(evt);
-    cb();
-  });
-};
-
-const showDiscussedPicturesClick = (cb) => {
-  discussedButton.addEventListener('click', (evt) => {
-    toggleButtons(evt);
-    cb();
-  });
-};
-
-export {
-  showFilters,
-  showDefaultPicturesClick,
-  showRandomPicturesClick,
-  showDiscussedPicturesClick,
-};
+export { showFilters, onFilterButtonClick };

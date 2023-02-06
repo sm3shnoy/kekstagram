@@ -25,4 +25,4 @@ const createPreview = (photos) => {
   pictures.append(similarPicturesFragment);
 };
 
-export { createPreview };
+export { createPreview, pictures };
