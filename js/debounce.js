@@ -1,12 +1,12 @@
 const debounce = (cb, delay) => {
   let timer = null;
 
-  return () => {
+  return (...args) => {
     if (timer) {
       clearTimeout(timer);
     }
 
-    timer = setTimeout(cb, delay);
+    timer = setTimeout(() => cb(...args), delay);
   };
 };
 

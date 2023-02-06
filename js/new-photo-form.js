@@ -5,6 +5,7 @@ import { isEscEvent } from './util.js';
 
 const MAX_HASHTAG_LENGTH = 20;
 const MAX_HASHTAG_COUNT = 5;
+
 const uploadPhotoForm = document.querySelector('.img-upload__form');
 const hashTagField = document.querySelector('.text__hashtags');
 const description = document.querySelector('.text__description');

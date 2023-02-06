@@ -1,4 +1,5 @@
 import { showFilters } from './filters.js';
+import { debounce } from './debounce.js';
 
 const checkStatus = (response) => {
   if (response.ok) {
@@ -18,7 +19,7 @@ const getPreviews = (onSuccess) => {
     .catch((error) => console.log(error));
 };
 
-const sendData = (onSuccess, onFail, body) => {
+const sendData = debounce((onSuccess, onFail, body) => {
   fetch('https://23.javascript.pages.academy/kekstagram', {
     method: 'POST',
     type: 'multipart/form-data',
@@ -34,6 +35,6 @@ const sendData = (onSuccess, onFail, body) => {
     .catch(() => {
       onFail();
     });
-};
+}, 500);
 
 export { getPreviews, sendData };

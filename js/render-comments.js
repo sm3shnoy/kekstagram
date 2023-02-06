@@ -5,7 +5,6 @@ const COMMENTS_LOAD_STEP = 5;
 const commentsList = document.querySelector('.social__comments');
 const commentsItem = commentsList.querySelector('.social__comment');
 const commentCountElement = document.querySelector('.social__comment-count');
-const commentLoader = document.querySelector('.comments-loader');
 const moreCommentsButton = document.querySelector('.comments-loader');
 
 const state = {
@@ -19,9 +18,9 @@ const toggleLoader = () => {
     state.comments.length < COMMENTS_LOAD_STEP ||
     state.commentsLoaded.length >= state.comments.length
   ) {
-    commentLoader.hidden = true;
+    moreCommentsButton.hidden = true;
   } else {
-    commentLoader.hidden = false;
+    moreCommentsButton.hidden = false;
   }
 };
 
