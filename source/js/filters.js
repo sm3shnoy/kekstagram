@@ -1,6 +1,6 @@
+import _ from 'lodash';
 import { shaffle, compareCommentLength, clearPicturesList } from './util.js';
 import { createPreview } from './create-preview.js';
-import { debounce } from './debounce.js';
 
 const filters = document.querySelector('.img-filters');
 const filtersButtons = filters.querySelectorAll('.img-filters__button');
@@ -12,7 +12,7 @@ const filtersF = {
     createPreview(photos.slice().sort(compareCommentLength)),
 };
 
-const changeFilters = debounce((evt, photos) => {
+const changeFilters = _.debounce((evt, photos) => {
   if (evt.target.id) {
     clearPicturesList();
 

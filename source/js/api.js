@@ -1,5 +1,5 @@
+import _ from 'lodash';
 import { showFilters } from './filters.js';
-import { debounce } from './debounce.js';
 
 const checkStatus = (response) => {
   if (response.ok) {
@@ -19,7 +19,7 @@ const getPreviews = (onSuccess) => {
     .catch((error) => console.log(error));
 };
 
-const sendData = debounce((onSuccess, onFail, body) => {
+const sendData = _.debounce((onSuccess, onFail, body) => {
   fetch('https://23.javascript.pages.academy/kekstagram', {
     method: 'POST',
     type: 'multipart/form-data',

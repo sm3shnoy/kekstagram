@@ -1,4 +1,4 @@
-import { debounce } from './debounce.js';
+import _ from 'lodash';
 
 const COMMENTS_LOAD_STEP = 5;
 
@@ -62,7 +62,7 @@ function renderComments() {
 
 moreCommentsButton.addEventListener(
   'click',
-  debounce(() => {
+  _.debounce(() => {
     renderComments();
     toggleLoader();
   }, 500)
