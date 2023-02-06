@@ -1,3 +1,5 @@
+import noUiSlider from 'nouislider';
+import 'nouislider/dist/nouislider.css';
 import { preview } from './edit-photo-modal.js';
 
 const slider = document.querySelector('.effect-level__slider');
